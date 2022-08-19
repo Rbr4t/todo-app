@@ -1,0 +1,20 @@
+General overview:
+    Card based chore organizing system. 
+    Cards can be organized with border color.
+    Every card has a title and description.
+    Depending on the priority the card background color changes.
+    Every card has a toDO date, depending on the current one it will either be green or red.
+    Every card has a button for removing the cards from the stack.
+
+UI/UX:
+    Simple design.
+    Navbar is at the bottom of the page(where everything is controlled at).
+    At the top of the page is the app name and Dark mode option.
+    At the middle is the toDO section, when cards overflow, it is scrollable to the right.
+    Cards with higher priority are listed before.
+
+What technologies are needed?
+    -vanilla CSS, HTML, JS.
+    -webpack for managing all of this.
+    -some kind of date system for dates.
+    -localStorage for saving the chores.
