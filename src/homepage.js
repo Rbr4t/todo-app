@@ -29,9 +29,7 @@ export default function loadHome(){
     buttons.classList.add('buttons');
 
     // label and select element
-    const label = document.createElement('label');
-    label.setAttribute('for', 'options');
-    label.textContent = 'Select the project: '
+    
     const select = document.createElement('select');
     select.name = 'projects';
     select.id = 'options';
@@ -46,8 +44,13 @@ export default function loadHome(){
     option.value = 'add';
     option.textContent = 'new project';
     select.appendChild(option);
-    buttons.appendChild(label);
     buttons.appendChild(select);
+
+    // add task
+    const task = document.createElement('button');
+    task.classList.add('task');
+    task.textContent = "+";
+    buttons.appendChild(task);
 
     // dark mode switch
     const button = document.createElement('button');
