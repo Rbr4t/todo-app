@@ -1,10 +1,13 @@
 {
   "name": "todo-app",
+  
   "version": "1.0.0",
   "description": "A basic TODO app made for The Odin Project.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/Rbr4t/todo-app/issues"
   },
-  "homepage": "https://github.com/Rbr4t/todo-app#readme"
+  "homepage": "https://github.com/Rbr4t/todo-app#readme",
+  "dependencies": {
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
 }

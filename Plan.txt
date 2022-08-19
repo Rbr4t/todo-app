@@ -4,14 +4,15 @@ General overview:
     Every card has a title and description.
     Depending on the priority the card background color changes.
     Every card has a toDO date, depending on the current one it will either be green or red.
-    Every card has a button for removing the cards from the stack.
+    Every card has a button for checking the tasks.
+    Different projects, can be chosen from a dropdown menu.
 
 UI/UX:
     Simple design.
-    Navbar is at the bottom of the page(where everything is controlled at).
-    At the top of the page is the app name and Dark mode option.
-    At the middle is the toDO section, when cards overflow, it is scrollable to the right.
-    Cards with higher priority are listed before.
+    Navbar is at the top of the page(where everything is controlled at).
+    At the top of the page is the app name and Dark mode option too.
+    On the toDO section, when cards overflow, it is scrollable to the right.
+    Cards with higher priority are listed before others.
 
 What technologies are needed?
     -vanilla CSS, HTML, JS.
