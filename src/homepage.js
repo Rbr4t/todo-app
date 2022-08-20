@@ -48,7 +48,7 @@ export default function loadHome(){
 
     // add task
     const task = document.createElement('button');
-    task.classList.add('task');
+    task.classList.add('addtask');
     task.textContent = "+";
     buttons.appendChild(task);
 
