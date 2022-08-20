@@ -48,12 +48,13 @@ export default function loadHome(){
 
     // add task
     const task = document.createElement('button');
-    task.classList.add('addtask');
+    task.classList.add('addproject');
     task.textContent = "+";
     buttons.appendChild(task);
 
     // dark mode switch
     const button = document.createElement('button');
+    button.classList.add('button')
     const moon = new Image();
     moon.src = Moon;
     moon.alt = "darkmode";

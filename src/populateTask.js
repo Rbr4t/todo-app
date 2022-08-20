@@ -1,15 +1,15 @@
-export default function populate(title, desc, dueDate){
+export default function populate(obj){
     const todo = document.querySelector('.todo');
 
     // card
     const div = document.createElement('div');
     div.classList.add('task');
     const h1 = document.createElement('h1');
-    h1.textContent = title;
+    h1.textContent = obj.title;
     const p = document.createElement('p');
-    p.textContent = desc;
+    p.textContent = obj.description;
     const h4 = document.createElement('h4');
-    h4.textContent = dueDate;
+    h4.textContent = obj.dueDate;
     const button = document.createElement('button');
     button.classList.add('remove');
     button.textContent = 'remove';
