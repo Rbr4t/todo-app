@@ -2,50 +2,64 @@ import './style.css';
 import loadHome from './homepage.js'
 import populate from './populateTask.js'
 
-loadHome()
-/*
-    1. We need a factory module for the board
-    2. We need a class for task card
+// Board.addBoard('Task1', 'Do smh');
+// console.log(Board.board)
+// Board.addBoard('Task2', 'Don\'t do smh', "yeah");
+// console.log(Board.board)
 
-*/ 
+// Board.board.forEach(x => populate(x.title, x.description, x.dueDate))
+
+
+// loads homepage
+loadHome()
+
 const Board = (function(){
     let board = [];
-
-    const addBoard = (title, description, dueDate=null) =>{
-        const newCard = new Card(title, description, dueDate)
+    
+    const addToBoard = (title, description, dueDate=null) =>{
+        const newCard = new Card(title, description)
         board.push(newCard)
-        console.log(newCard)
+        populate(title, description, dueDate)
+        addRemove()
     }
-    const removeBoard = (index) => {
-        board.splice(index, 1)
-        removeTask[index].parentNode.remove()
+    const removeFromBoard = (index) => {
+        console.log(board)
+        board.splice(index, 1);
+        const tasks = document.querySelectorAll('.remove');
+        
+        // Removes it's parent element, the card 
+        tasks[index].parentElement.remove();
     };
-    return {board, addBoard, removeBoard}
+    return { addToBoard, removeFromBoard}
 })()
 
-function Card(title, description, dueDate){
+// every task has this class
+function Card(title, description, dueDate, id){
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
-
-    this.say = () => console.log(title);
 }
 
 
-Board.addBoard('Task1', 'Do smh');
-console.log(Board.board)
-Board.addBoard('Task2', 'Don\'t do smh', "yeah");
-console.log(Board.board)
 
-Board.board.forEach(x => populate(x))
+// Adds for every remove button a event listener
+function addRemove(){
+    const tasks = document.querySelectorAll('.remove');
+    
+    tasks.forEach((task, i) => {
+        task.addEventListener('click', () => {
+            Board.removeFromBoard(i);
+        })
+    })   
+}
 
-// remove a task
-const removeTask = document.querySelectorAll('.remove');
-console.log(removeTask)
-removeTask.forEach((task, index) => {
-    task.addEventListener('click', e=> {
-        Board.removeBoard(index)
-        console.log(index)
-        
-    })
+// add a task
+const addTask = document.getElementById('addtask');
+addTask.addEventListener('click', e => {
+    Board.addToBoard('TEST', 'test', 'tomorrow')
+    
+    
+    // now left to do is the form element which comes to the middle of screen
+    // get the data needed from there
+    // use the data do create a new task card
 })

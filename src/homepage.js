@@ -74,9 +74,17 @@ export default function loadHome(){
     container.classList.add('container');
     const todo = document.createElement('div');
     todo.classList.add('todo');
+    
+
+    // add a new task adding card/button
+    const button1 = document.createElement('button');
+    button1.classList.add('task')
+    button1.setAttribute('id', 'addtask')
+    
+    
+    button1.textContent ='+'
+    todo.appendChild(button1)
     container.appendChild(todo);
     page.appendChild(container);
-
-
 };
 

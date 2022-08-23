@@ -51,8 +51,9 @@ button {
 
 /* CONTENT */
 .task {
+    padding: 5px;
     width: 15vw;
-    height: 20vh;
+    height: 25vh;
     background-color: beige;
     
     border: 1px solid red
@@ -79,6 +80,13 @@ button {
     align-items: center;
     background-color: #fafaf9;
     
+}
+
+#addtask {
+    font-size: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
