@@ -13,7 +13,6 @@ export default function loadHome(){
     const logo = document.createElement('div');
     logo.classList.add('logo');
     const icon = new Image();
-    icon.src = Icon;
     icon.alt = "logo";
     icon.classList.add('icon')
     logo.appendChild(icon);
@@ -56,7 +55,6 @@ export default function loadHome(){
     const button = document.createElement('button');
     button.classList.add('button')
     const moon = new Image();
-    moon.src = Moon;
     moon.alt = "darkmode";
     moon.classList.add('icon');
     button.appendChild(moon);

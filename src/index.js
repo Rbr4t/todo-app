@@ -15,9 +15,7 @@ const Board = (function(){
         populate(title, description, dueDate)
         addRemove()
     }
-    const removeFromBoard = (e, index) => {
-        board.splice(index, 1);
-        
+    const removeFromBoard = (e, index) => {  
         
         console.log(board)
         // Removes it's parent element, the card 
@@ -37,16 +35,22 @@ function Card(title, description, dueDate){
 
 // Adds for every remove button a event listener
 function addRemove(){
-    const tasks = document.querySelectorAll('.remove');
+    const task = document.querySelectorAll('.remove')[document.querySelectorAll('.remove').length -1];
     
-    tasks.forEach(task => {
+    
         
-        task.addEventListener('click', (e) => {
-            // Board.removeFromBoard(e, i);
-
-            console.log(e.target.parentElement)
-        })
-    })   
+    task.addEventListener('click', (e) => {
+        // Board.removeFromBoard(e, i);
+        let m = [];
+        for(let t=0; t<document.querySelectorAll('.remove').length; t++){
+            if(e.target.parentElement === document.querySelectorAll('.remove')[t].parentElement){
+                Board.removeFromBoard(e, t);
+            }   
+        }
+        
+        console.log(e.target.parentElement)
+    })
+      
 }
 
 // add a task
