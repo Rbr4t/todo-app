@@ -1,7 +1,7 @@
 import './style.css';
-import Icon from './checkbox.png'
-import Moon from './night-mode.png'
-import Bin from './bin.png'
+import Icon from './images/checkbox.png'
+import Moon from './images/night-mode.png'
+import Bin from './images/bin.png'
 
 export default function loadHome(){
     const page = document.querySelector('#content');

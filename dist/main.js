@@ -116,7 +116,7 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ loadHome)\n/* harmony export */ });\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _checkbox_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./checkbox.png */ \"./src/checkbox.png\");\n/* harmony import */ var _night_mode_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./night-mode.png */ \"./src/night-mode.png\");\n/* harmony import */ var _bin_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./bin.png */ \"./src/bin.png\");\n\n\n\n\n\nfunction loadHome(){\n    const page = document.querySelector('#content');\n\n    // navbar\n    const navbar = document.createElement('div');\n    navbar.classList.add('navbar');\n\n    // logo and name\n    const logo = document.createElement('div');\n    logo.classList.add('logo');\n    const icon = new Image();\n    icon.src = _checkbox_png__WEBPACK_IMPORTED_MODULE_1__;\n    icon.alt = \"logo\";\n    icon.classList.add('icon')\n    logo.appendChild(icon);\n    const header = document.createElement('h2');\n    header.textContent = 'TODO APP';\n    logo.appendChild(header);\n    \n    //adding them to the page\n    navbar.appendChild(logo);\n    \n    // buttons section\n    const buttons = document.createElement('div');\n    buttons.classList.add('buttons');\n\n    // label and select element\n    \n    const select = document.createElement('select');\n    select.name = 'projects';\n    select.id = 'options';\n\n    for(let i=0; i<2; i++){\n        const option = document.createElement('option');\n        if(i === 0){\n            option.value = `Home`;\n            option.textContent = `Home`;\n\n        } else {\n            option.value = `project${i}`;\n            option.textContent = `Project${i}`;\n        }\n        \n        select.appendChild(option);\n    };\n    \n    buttons.appendChild(select);\n\n    // add task\n    const task = document.createElement('button');\n    task.classList.add('addproject');\n    task.textContent = \"+\";\n    buttons.appendChild(task);\n\n    // dark mode switch\n    const button = document.createElement('button');\n    button.classList.add('button')\n    const moon = new Image();\n    moon.src = _night_mode_png__WEBPACK_IMPORTED_MODULE_2__;\n    moon.alt = 'darkmode';\n    moon.classList.add('icon');\n    button.appendChild(moon);\n    buttons.appendChild(button);\n\n    // REMOVE ALL\n    const clear = document.createElement('button');\n    \n    clear.classList.add('clear', 'icon')\n    const bin = new Image();\n    bin.src = _bin_png__WEBPACK_IMPORTED_MODULE_3__;\n    bin.alt = 'clearAll';\n    bin.classList.add('icon');\n    clear.appendChild(bin);\n    buttons.appendChild(clear);\n\n    //adding them to the page\n    navbar.appendChild(buttons);\n\n    page.appendChild(navbar)\n\n\n    \n    // container for tasks\n    const container = document.createElement('div');\n    container.classList.add('container');\n    const todo = document.createElement('div');\n    todo.classList.add('todo');\n    \n\n    // add a new task adding card/button\n    const button1 = document.createElement('button');\n    button1.classList.add('task')\n    button1.setAttribute('id', 'addtask')\n    \n    \n    button1.textContent ='+'\n    todo.appendChild(button1)\n    container.appendChild(todo);\n    page.appendChild(container);\n};\n\n\n\n//# sourceURL=webpack://todo-app/./src/homepage.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ loadHome)\n/* harmony export */ });\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var _images_checkbox_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./images/checkbox.png */ \"./src/images/checkbox.png\");\n/* harmony import */ var _images_night_mode_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./images/night-mode.png */ \"./src/images/night-mode.png\");\n/* harmony import */ var _images_bin_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./images/bin.png */ \"./src/images/bin.png\");\n\n\n\n\n\nfunction loadHome(){\n    const page = document.querySelector('#content');\n\n    // navbar\n    const navbar = document.createElement('div');\n    navbar.classList.add('navbar');\n\n    // logo and name\n    const logo = document.createElement('div');\n    logo.classList.add('logo');\n    const icon = new Image();\n    icon.src = _images_checkbox_png__WEBPACK_IMPORTED_MODULE_1__;\n    icon.alt = \"logo\";\n    icon.classList.add('icon')\n    logo.appendChild(icon);\n    const header = document.createElement('h2');\n    header.textContent = 'TODO APP';\n    logo.appendChild(header);\n    \n    //adding them to the page\n    navbar.appendChild(logo);\n    \n    // buttons section\n    const buttons = document.createElement('div');\n    buttons.classList.add('buttons');\n\n    // label and select element\n    \n    const select = document.createElement('select');\n    select.name = 'projects';\n    select.id = 'options';\n\n    for(let i=0; i<2; i++){\n        const option = document.createElement('option');\n        if(i === 0){\n            option.value = `Home`;\n            option.textContent = `Home`;\n\n        } else {\n            option.value = `project${i}`;\n            option.textContent = `Project${i}`;\n        }\n        \n        select.appendChild(option);\n    };\n    \n    buttons.appendChild(select);\n\n    // add task\n    const task = document.createElement('button');\n    task.classList.add('addproject');\n    task.textContent = \"+\";\n    buttons.appendChild(task);\n\n    // dark mode switch\n    const button = document.createElement('button');\n    button.classList.add('button')\n    const moon = new Image();\n    moon.src = _images_night_mode_png__WEBPACK_IMPORTED_MODULE_2__;\n    moon.alt = 'darkmode';\n    moon.classList.add('icon');\n    button.appendChild(moon);\n    buttons.appendChild(button);\n\n    // REMOVE ALL\n    const clear = document.createElement('button');\n    \n    clear.classList.add('clear', 'icon')\n    const bin = new Image();\n    bin.src = _images_bin_png__WEBPACK_IMPORTED_MODULE_3__;\n    bin.alt = 'clearAll';\n    bin.classList.add('icon');\n    clear.appendChild(bin);\n    buttons.appendChild(clear);\n\n    //adding them to the page\n    navbar.appendChild(buttons);\n\n    page.appendChild(navbar)\n\n\n    \n    // container for tasks\n    const container = document.createElement('div');\n    container.classList.add('container');\n    const todo = document.createElement('div');\n    todo.classList.add('todo');\n    \n\n    // add a new task adding card/button\n    const button1 = document.createElement('button');\n    button1.classList.add('task')\n    button1.setAttribute('id', 'addtask')\n    \n    \n    button1.textContent ='+'\n    todo.appendChild(button1)\n    container.appendChild(todo);\n    page.appendChild(container);\n};\n\n\n\n//# sourceURL=webpack://todo-app/./src/homepage.js?");
 
 /***/ }),
 
@@ -150,33 +150,33 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "./src/bin.png":
-/*!*********************!*\
-  !*** ./src/bin.png ***!
-  \*********************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-eval("module.exports = __webpack_require__.p + \"c4f0af28c10a19fbeee1.png\";\n\n//# sourceURL=webpack://todo-app/./src/bin.png?");
-
-/***/ }),
-
-/***/ "./src/checkbox.png":
-/*!**************************!*\
-  !*** ./src/checkbox.png ***!
-  \**************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-eval("module.exports = __webpack_require__.p + \"1d1662222c383eccf4f0.png\";\n\n//# sourceURL=webpack://todo-app/./src/checkbox.png?");
-
-/***/ }),
-
-/***/ "./src/night-mode.png":
+/***/ "./src/images/bin.png":
 /*!****************************!*\
-  !*** ./src/night-mode.png ***!
+  !*** ./src/images/bin.png ***!
   \****************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("module.exports = __webpack_require__.p + \"57c0eef05d668ca6c18f.png\";\n\n//# sourceURL=webpack://todo-app/./src/night-mode.png?");
+eval("module.exports = __webpack_require__.p + \"c4f0af28c10a19fbeee1.png\";\n\n//# sourceURL=webpack://todo-app/./src/images/bin.png?");
+
+/***/ }),
+
+/***/ "./src/images/checkbox.png":
+/*!*********************************!*\
+  !*** ./src/images/checkbox.png ***!
+  \*********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"1d1662222c383eccf4f0.png\";\n\n//# sourceURL=webpack://todo-app/./src/images/checkbox.png?");
+
+/***/ }),
+
+/***/ "./src/images/night-mode.png":
+/*!***********************************!*\
+  !*** ./src/images/night-mode.png ***!
+  \***********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("module.exports = __webpack_require__.p + \"57c0eef05d668ca6c18f.png\";\n\n//# sourceURL=webpack://todo-app/./src/images/night-mode.png?");
 
 /***/ })
 
