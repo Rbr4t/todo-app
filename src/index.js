@@ -1,9 +1,12 @@
 import './style.css';
 import loadHome from './homepage.js'
 import populate from './populateTask.js'
+import loadPopups from './loadPopups.js'
 
-// loads homepage
-loadHome()
+// loads homepage and popups
+loadPopups();
+loadHome();
+
 
 const Board = (function(){
     let board = [];
@@ -112,6 +115,7 @@ btn.addEventListener('click', function(e){
 const clearAll = document.querySelector('.clear');
 clearAll.addEventListener('click', () => {
     Board.removeAll();
+    document.querySelector('#options').innerHTML = `<option value="Home">Home</option><option value="project1">Project1</option>`
 })
 
 // add a new project
