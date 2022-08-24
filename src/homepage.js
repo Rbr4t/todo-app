@@ -1,6 +1,7 @@
 import './style.css';
 import Icon from './checkbox.png'
 import Moon from './night-mode.png'
+import Bin from './bin.png'
 
 export default function loadHome(){
     const page = document.querySelector('#content');
@@ -57,10 +58,21 @@ export default function loadHome(){
     button.classList.add('button')
     const moon = new Image();
     moon.src = Moon;
-    moon.alt = "darkmode";
+    moon.alt = 'darkmode';
     moon.classList.add('icon');
     button.appendChild(moon);
     buttons.appendChild(button);
+
+    // REMOVE ALL
+    const clear = document.createElement('button');
+    
+    clear.classList.add('clear', 'icon')
+    const bin = new Image();
+    bin.src = Bin;
+    bin.alt = 'clearAll';
+    bin.classList.add('icon');
+    clear.appendChild(bin);
+    buttons.appendChild(clear);
 
     //adding them to the page
     navbar.appendChild(buttons);

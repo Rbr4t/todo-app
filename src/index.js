@@ -7,15 +7,15 @@ loadHome()
 
 const Board = (function(){
     let board = [];
-    let indexOld = null;
-
-    const addToBoard = (title, description, dueDate=null, priority=2) =>{
+    
+    const addToBoard = (title, description, dueDate=null, priority) =>{
         const newCard = new Card(title, description)
         board.push(newCard)
         populate(title, description, dueDate, priority)
         addRemove()
         addDone()
     }
+
     const removeFromBoard = (e) => {  
         const tasks = document.querySelectorAll('.remove');
 
@@ -25,15 +25,26 @@ const Board = (function(){
                 board.splice(t, 1)
             };   
         }
-        console.log(board)
         // Removes it's parent element, the card 
         e.target.parentElement.remove();
+    };
+
+    const removeAll = () => {
+        console.log('clearing all')
+        board = [];
+        while(document.querySelector('.todo').lastChild){
+            if(document.querySelector('.todo').lastChild.id === 'addtask'){
+                break
+            }
+            console.log(document.querySelector('.todo').lastChild.remove());
+        }
     };
 
     const taskDone = (e) => {
         e.target.parentElement.classList.toggle('done');
     }
-    return { addToBoard, removeFromBoard, taskDone}
+
+    return { addToBoard, removeFromBoard, taskDone, removeAll}
 })()
 
 // every task has this class
@@ -92,6 +103,14 @@ btn.addEventListener('click', function(e){
     formData.forEach((value, key) => {
         formDataObj[key] = value
     });
+    console.log(formDataObj.prio)
     Board.addToBoard(formDataObj.title, formDataObj.text, formDataObj.date, formDataObj.prio);
     document.querySelector('.popup').style.display = 'none';
-}) 
+    e.target.parentElement.reset();
+}); 
+
+// clear all
+const clearAll = document.querySelector('.clear');
+clearAll.addEventListener('click', () => {
+    Board.removeAll();
+})

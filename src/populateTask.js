@@ -3,9 +3,9 @@ export default function populate(title, description, dueDate, priority){
     // card
     const div = document.createElement('div');
     div.classList.add('task');
-    if(priority===0){
+    if(priority==='low'){
         div.classList.add('low-priority')
-    } else if(priority===1){
+    } else if(priority==='medium'){
         div.classList.add('medium-priority')
     } else {
         div.classList.add('high-priority')
