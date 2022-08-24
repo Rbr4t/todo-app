@@ -47,8 +47,6 @@ function Card(title, description, dueDate, priority){
 // Adds eventlisteners to checkboxes
 function addDone(){
     const task = document.querySelectorAll('.done')[document.querySelectorAll('.done').length-1];
-
-    
     task.addEventListener('click', Board.taskDone);
     
 }
@@ -68,13 +66,32 @@ function addRemove(){
       
 }
 
+
 // add a task
+const close = document.querySelector('.close')
+close.addEventListener('click', function(){
+    document.querySelector('.popup').style.display = 'none';
+});
+
+// add new task
 const addTask = document.getElementById('addtask');
 addTask.addEventListener('click', e => {
-    Board.addToBoard('TEST', String(Math.random()), 'tomorrow')
+    document.querySelector('.popup').style.display = 'flex';
     
-    
-    // now left to do is the form element which comes to the middle of screen
     // get the data needed from there
     // use the data do create a new task card
-})
+});
+
+// send a new task
+const btn =document.querySelector('.post');
+btn.addEventListener('click', function(e){
+    e.preventDefault()
+    const formData = new FormData(document.querySelector('form'))
+
+    const formDataObj = {};
+    formData.forEach((value, key) => {
+        formDataObj[key] = value
+    });
+    Board.addToBoard(formDataObj.title, formDataObj.text, formDataObj.date, formDataObj.prio);
+    document.querySelector('.popup').style.display = 'none';
+}) 
