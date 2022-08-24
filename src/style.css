@@ -113,20 +113,28 @@ button {
 
 .popup {
 
-    display: none;
+    
     flex-direction: column;
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
-    height: 400px;
     align-items: center;
     justify-content: center;
     background-color: #f97316;
     border-radius: 10px;
 }
 
+.createtask {
+    display: none;
+    width: 500px;
+    height: 400px;
+}
+.createproject{
+    display: none;
+    width: 500px;
+    height: 250px;
+}
 form .data{
     display: grid;
     grid-template-columns: max-content max-content;

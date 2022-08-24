@@ -78,26 +78,25 @@ function addRemove(){
 }
 
 
-// add a task
-const close = document.querySelector('.close')
-close.addEventListener('click', function(){
-    document.querySelector('.popup').style.display = 'none';
-});
+// close window
+const close = document.querySelectorAll('.close')
+close.forEach(c => c.addEventListener('click', function(){
+    console.log()
+    this.parentElement.style.display = 'none';
+}));
 
 // add new task
 const addTask = document.getElementById('addtask');
 addTask.addEventListener('click', e => {
-    document.querySelector('.popup').style.display = 'flex';
-    
-    // get the data needed from there
-    // use the data do create a new task card
+    document.querySelector('.createtask').style.display = 'flex';
 });
+
 
 // send a new task
 const btn =document.querySelector('.post');
 btn.addEventListener('click', function(e){
     e.preventDefault()
-    const formData = new FormData(document.querySelector('form'))
+    const formData = new FormData(document.querySelector('#task'))
 
     const formDataObj = {};
     formData.forEach((value, key) => {
@@ -113,4 +112,31 @@ btn.addEventListener('click', function(e){
 const clearAll = document.querySelector('.clear');
 clearAll.addEventListener('click', () => {
     Board.removeAll();
+})
+
+// add a new project
+const project = document.querySelector('.addproject');
+project.addEventListener('click', e => {
+    document.getElementById('newproject').style.display = 'flex';
+});
+
+// send a new project
+const btnproject = document.querySelector('.add');
+btnproject.addEventListener('click', (e) => {
+    e.preventDefault();
+    const list = document.querySelector('#options');
+    
+    const formData = new FormData(document.querySelector('#project'))
+
+    const formDataObj = {};
+    formData.forEach((value, key) => {
+        formDataObj[key] = value
+    });
+    console.log(formDataObj)
+    const newSelection = document.createElement('option');
+    newSelection.value = formDataObj.projecttitle;
+    newSelection.textContent = formDataObj.projecttitle;
+    list.appendChild(newSelection);
+    e.target.parentElement.reset();
+    document.getElementById('newproject').style.display = 'none';
 })

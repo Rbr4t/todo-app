@@ -37,14 +37,18 @@ export default function loadHome(){
 
     for(let i=0; i<2; i++){
         const option = document.createElement('option');
-        option.value = `project${i}`;
-        option.textContent = `Project${i}`;
+        if(i === 0){
+            option.value = `Home`;
+            option.textContent = `Home`;
+
+        } else {
+            option.value = `project${i}`;
+            option.textContent = `Project${i}`;
+        }
+        
         select.appendChild(option);
     };
-    const option = document.createElement('option');
-    option.value = 'add';
-    option.textContent = 'new project';
-    select.appendChild(option);
+    
     buttons.appendChild(select);
 
     // add task
