@@ -9,46 +9,61 @@ const Board = (function(){
     let board = [];
     let indexOld = null;
 
-    const addToBoard = (title, description, dueDate=null) =>{
+    const addToBoard = (title, description, dueDate=null, priority=2) =>{
         const newCard = new Card(title, description)
         board.push(newCard)
-        populate(title, description, dueDate)
+        populate(title, description, dueDate, priority)
         addRemove()
+        addDone()
     }
-    const removeFromBoard = (e, index) => {  
+    const removeFromBoard = (e) => {  
+        const tasks = document.querySelectorAll('.remove');
+
         
+        for(let t=0; t<document.querySelectorAll('.remove').length; t++){
+            if(e.target.parentElement === document.querySelectorAll('.remove')[t].parentElement){
+                board.splice(t, 1)
+            };   
+        }
         console.log(board)
         // Removes it's parent element, the card 
         e.target.parentElement.remove();
     };
-    return { addToBoard, removeFromBoard}
+
+    const taskDone = (e) => {
+        e.target.parentElement.classList.toggle('done');
+    }
+    return { addToBoard, removeFromBoard, taskDone}
 })()
 
 // every task has this class
-function Card(title, description, dueDate){
+function Card(title, description, dueDate, priority){
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
+    this.priority = priority;
 }
 
+// Adds eventlisteners to checkboxes
+function addDone(){
+    const task = document.querySelectorAll('.done')[document.querySelectorAll('.done').length-1];
+
+    
+    task.addEventListener('click', Board.taskDone);
+    
+}
 
 
 // Adds for every remove button a event listener
 function addRemove(){
-    const task = document.querySelectorAll('.remove')[document.querySelectorAll('.remove').length -1];
     
-    
-        
-    task.addEventListener('click', (e) => {
-        // Board.removeFromBoard(e, i);
-        let m = [];
-        for(let t=0; t<document.querySelectorAll('.remove').length; t++){
-            if(e.target.parentElement === document.querySelectorAll('.remove')[t].parentElement){
-                Board.removeFromBoard(e, t);
-            }   
-        }
-        
-        console.log(e.target.parentElement)
+    const tasks = document.querySelectorAll('.remove');
+
+    tasks.forEach((task) => {
+        task.removeEventListener('click', Board.removeFromBoard);
+    })
+    tasks.forEach((task) => {
+        task.addEventListener('click', Board.removeFromBoard);
     })
       
 }

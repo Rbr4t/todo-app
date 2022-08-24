@@ -1,9 +1,15 @@
-export default function populate(title, description, dueDate){
+export default function populate(title, description, dueDate, priority){
     const todo = document.querySelector('.todo');
     // card
     const div = document.createElement('div');
     div.classList.add('task');
-    
+    if(priority===0){
+        div.classList.add('low-priority')
+    } else if(priority===1){
+        div.classList.add('medium-priority')
+    } else {
+        div.classList.add('high-priority')
+    }
     
     const h1 = document.createElement('h1');
     h1.textContent = title;

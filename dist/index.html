@@ -9,8 +9,30 @@
     <style src="style.css"></style>
 </head>
 <body>
-    <div id="content">
+    <div id="content" style="position: relative;">
+        <div class="popup createtask" >
+            <form>
+                <div class="data">
+                    <label for="title"class="right">Enter title</label>
+                    <input type="text" name="title" id="title" >
+                    <label for="title" class="right">Enter text</label>
+                    <input type="text" name="text" id="text">
+                    <label for="date" class="right">Due</label>
+                    <input type="date" name="date" id="date">
+                    <label for="prio" class="right">Priority</label>
+                    <select name="prio" id="prio">
+                        <option value="high">high</option>
+                        <option value="medium">medium</option>
+                        <option value="low">low</option>
+                    </select>
+                </div>
+               
+                <button class="post">Post</button>
+                
 
+                
+            </form>
+        </div>
     </div>
 </body>
 </html>
