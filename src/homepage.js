@@ -35,19 +35,11 @@ export default function loadHome(){
     select.name = 'projects';
     select.id = 'options';
 
-    for(let i=0; i<2; i++){
-        const option = document.createElement('option');
-        if(i === 0){
-            option.value = `Home`;
-            option.textContent = `Home`;
-
-        } else {
-            option.value = `project${i}`;
-            option.textContent = `Project${i}`;
-        }
-        
-        select.appendChild(option);
-    };
+    const option = document.createElement('option');
+    option.value = `Home`;
+    option.textContent = `Home`;
+    select.appendChild(option);
+    
     
     buttons.appendChild(select);
 

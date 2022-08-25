@@ -1,3 +1,5 @@
+import {format} from 'date-fns';
+
 export default function populate(title, description, dueDate, priority){
     const todo = document.querySelector('.todo');
     // card
@@ -16,7 +18,14 @@ export default function populate(title, description, dueDate, priority){
     const p = document.createElement('p');
     p.textContent = description;
     const h4 = document.createElement('h4');
-    h4.textContent = dueDate;
+    
+    try {
+        h4.textContent = `${format(new Date(parseInt(dueDate.substr(0, 4)),parseInt(dueDate.substr(8, 2)),parseInt(dueDate.substr(5, 2))), 'EEEE')} ${dueDate.substr(8, 2)}.${dueDate.substr(5, 2)}.${dueDate.substr(0, 4)}` ;
+      }
+      catch(err) {
+        h4.textContent = `no date`
+      }
+    
     const button = document.createElement('button');
     button.classList.add('remove');
     button.textContent = 'remove';

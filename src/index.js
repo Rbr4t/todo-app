@@ -2,6 +2,8 @@ import './style.css';
 import loadHome from './homepage.js'
 import populate from './populateTask.js'
 import loadPopups from './loadPopups.js'
+import {validateTask, validateProject} from './formvalidation.js'
+
 
 // loads homepage and popups
 loadPopups();
@@ -59,11 +61,11 @@ function Card(title, description, dueDate, priority){
 
 const projectManager = (function(){
     
-    let projects = [new Board('Home'), new Board('project1')];
+    let projects = [new Board('Home')];
     let activeProject = projects[0];
 
     const resetAll = () => {
-        projects = [new Board('Home'), new Board('project1')];
+        projects = [new Board('Home')];
         activeProject = projects[0];
     }
     const createProject = (title) => {
@@ -125,26 +127,34 @@ addTask.addEventListener('click', e => {
 // send a new task
 const btn =document.querySelector('.post');
 btn.addEventListener('click', function(e){
+    
     e.preventDefault()
+    
     const formData = new FormData(document.querySelector('#task'))
 
     const formDataObj = {};
     formData.forEach((value, key) => {
         formDataObj[key] = value
     });
-    projectManager.activeProject.addToBoard(formDataObj.title, formDataObj.description, formDataObj.dueDate, formDataObj.priority);
-    projectManager.activeProject.showOnBoard(formDataObj);
-    document.querySelector('.popup').style.display = 'none';
-    e.target.parentElement.reset();
+
+    if(formDataObj.title !== ''){
+        projectManager.activeProject.addToBoard(formDataObj.title, formDataObj.description, formDataObj.dueDate, formDataObj.priority);
+        projectManager.activeProject.showOnBoard(formDataObj);
+        document.querySelector('.popup').style.display = 'none';
+        e.target.parentElement.reset();
+    } else {
+        validateTask()
+    }
+    
 }); 
 
 // clear all
 const clearAll = document.querySelector('.clear');
 clearAll.addEventListener('click', () => {
-    Object(projectManager.activeProject).removeAll();
-    Object(projectManager.activeProject).board = [];
+    projectManager.activeProject.removeAll();
+    projectManager.activeProject.board = [];
     projectManager.resetAll();    
-    document.querySelector('#options').innerHTML = `<option value="Home">Home</option><option value="project1">Project1</option>`
+    document.querySelector('#options').innerHTML = `<option value="Home">Home</option>`
 })
 
 // add a new project
@@ -165,14 +175,20 @@ btnproject.addEventListener('click', (e) => {
     formData.forEach((value, key) => {
         formDataObj[key] = value
     });
-    const newSelection = document.createElement('option');
-    newSelection.value = formDataObj.projecttitle;
-    newSelection.textContent = formDataObj.projecttitle;
-    list.appendChild(newSelection);
-    e.target.parentElement.reset();
-    document.getElementById('newproject').style.display = 'none';
+
+    if (formDataObj.title !== ''){
+        const newSelection = document.createElement('option');
+        newSelection.value = formDataObj.projecttitle;
+        newSelection.textContent = formDataObj.projecttitle;
+        list.appendChild(newSelection);
+        e.target.parentElement.reset();
+        document.getElementById('newproject').style.display = 'none';
+        
+        projectManager.createProject(formDataObj.projecttitle);
+    } else{
+        validateProject()
+    }
     
-    projectManager.createProject(formDataObj.projecttitle);
 })
 
 // choosing a project

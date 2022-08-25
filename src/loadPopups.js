@@ -6,12 +6,12 @@ export default function loadPopups(){
     <button class="close">X</button>
     <form id="task">
         <div class="data">
-            <label for="title" class="right">Enter title</label>
-            <input type="text" name="title" id="title" required>
+            <label for="title1" class="right">Enter title</label>
+            <input type="text" name="title" id="title1" required minlength="1" maxlength="15">
             <label for="description" class="right">Enter text</label>
             <input type="text" name="description" id="description">
             <label for="dueDate" class="right">Due</label>
-            <input type="datetime-local" name="dueDate" id="dueDate" required>
+            <input type="date" name="dueDate" id="dueDate">
             <label for="priority" class="right">Priority</label>
             <select name="priority" id="priority">
                 <option value="high">high</option>
