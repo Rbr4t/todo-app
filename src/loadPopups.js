@@ -7,11 +7,11 @@ export default function loadPopups(){
     <form id="task">
         <div class="data">
             <label for="title" class="right">Enter title</label>
-            <input type="text" name="title" id="title" required="">
+            <input type="text" name="title" id="title" required>
             <label for="description" class="right">Enter text</label>
-            <input type="text" name="description" id="description" required="">
+            <input type="text" name="description" id="description">
             <label for="dueDate" class="right">Due</label>
-            <input type="datetime-local" name="dueDate" id="dueDate" required="">
+            <input type="datetime-local" name="dueDate" id="dueDate" required>
             <label for="priority" class="right">Priority</label>
             <select name="priority" id="priority">
                 <option value="high">high</option>
@@ -19,7 +19,7 @@ export default function loadPopups(){
                 <option selected="" value="low">low</option>
             </select>
         </div>
-        <button class="post">Post</button>
+        <button type="submit" class="post">Post</button>
      </form>
     </div>
     <div class="popup createproject" id="newproject" style="display: none;">

@@ -13,23 +13,15 @@ function Board(title){
     this.board = [];
     
     this.addToBoard = function(title, description, dueDate=null, priority) {
-        // console.log([title, description, dueDate, priority])
-        console.log('adding to board')
-        console.log(description)
-        
-        console.log(projectManager.activeProject.board)
         const newCard = new Card(title, description, dueDate, priority)
         this.board.push(newCard)
-        console.log(this.board)
     }
     this.showOnBoard = function(obj){
-        console.log(this.board)
         populate(obj.title, obj.description, obj.dueDate, obj.priority)
         addRemove()
         addDone()
     }
         
-
     this.removeFromBoard = function (e){
         for(let t=0; t<document.querySelectorAll('.remove').length; t++){
             if(e.target.parentElement === document.querySelectorAll('.remove')[t].parentElement){
@@ -41,9 +33,7 @@ function Board(title){
     };
 
     this.removeAll = function() {
-        console.log(this.board)
         while(document.querySelector('.todo').lastChild){
-            // console.log("deleting")
             if(document.querySelector('.todo').lastChild.id === 'addtask'){
                 break;
             } else {
@@ -66,41 +56,6 @@ function Card(title, description, dueDate, priority){
     this.priority = priority;
 }
 
-// const projectManager = (function(){
-    
-//     let projects = [new Board('Home'), new Board('project1')];
-//     let activeProject;
-//     init()
-//     function init(i){
-//         activeProject = projects[i];
-//     }
-
-//     const createProject = (title) => {
-//         const project = new Board(title);
-//         console.log(projects)
-//         projects.push(project);
-//         confirm('project added')
-//     }
-
-//     function loadProject(e){
-//         console.log('loading project')
-//         let i= 0
-//         while(e.target.value !== projects[i].title){
-//             i++;
-//         }
-//         init(i)
-//         console.log('In projectManager object')
-//         console.log(activeProject)
-//         activeProject.removeAll()
-//     }
-    
-//     return {createProject, 
-            
-//             loadProject,
-
-//             activeProject
-//         }
-// })();
 
 const projectManager = (function(){
     
@@ -114,25 +69,23 @@ const projectManager = (function(){
     const createProject = (title) => {
         const project = new Board(title);
         projects.push(project);
-        confirm('project added')
+        confirm('new project added')
     }
 
     const loadProject = (e) => {
-        projectManager.activeProject.removeAll()
-        console.log('loading project')
+        activeProject.removeAll()
         for(let i= 0; i< projects.length; i++){
             if(e.target.value === projects[i].title){
-                projectManager.activeProject = projects[i];
+                activeProject = projects[i];
             }
         }
-        projectManager.activeProject.board.forEach(obj => projectManager.activeProject.showOnBoard(obj))
-        console.log('In projectManager object')
-        // console.log(projectManager.activeProject)
-        
+        activeProject.board.forEach(obj => projectManager.activeProject.showOnBoard(obj))  
     }
-    return {createProject, activeProject, loadProject, resetAll}
+    return {createProject, 
+        get activeProject(){return activeProject}, 
+        loadProject,
+        resetAll}
 })();
-// console.log(Object(projectManager.activeProject).test())
 
 // Adds eventlisteners to checkboxes
 function addDone(){
@@ -141,14 +94,12 @@ function addDone(){
     
 }
 
-
 // Adds for every remove button a event listener
 function addRemove(){
     
     const tasks = document.querySelectorAll('.remove');
 
     tasks.forEach((task) => {
-        console.log(projectManager.activeProject.board)
         task.removeEventListener('click', Object(projectManager.activeProject).removeFromBoard);
     })
     tasks.forEach((task) => {
@@ -161,7 +112,6 @@ function addRemove(){
 // close window
 const close = document.querySelectorAll('.close')
 close.forEach(c => c.addEventListener('click', function(){
-    // console.log()
     this.parentElement.style.display = 'none';
 }));
 
@@ -180,10 +130,8 @@ btn.addEventListener('click', function(e){
 
     const formDataObj = {};
     formData.forEach((value, key) => {
-        console.log((value, key))
         formDataObj[key] = value
     });
-    console.log([formDataObj])
     projectManager.activeProject.addToBoard(formDataObj.title, formDataObj.description, formDataObj.dueDate, formDataObj.priority);
     projectManager.activeProject.showOnBoard(formDataObj);
     document.querySelector('.popup').style.display = 'none';
@@ -195,8 +143,7 @@ const clearAll = document.querySelector('.clear');
 clearAll.addEventListener('click', () => {
     Object(projectManager.activeProject).removeAll();
     Object(projectManager.activeProject).board = [];
-    projectManager.resetAll();
-    
+    projectManager.resetAll();    
     document.querySelector('#options').innerHTML = `<option value="Home">Home</option><option value="project1">Project1</option>`
 })
 
@@ -216,10 +163,8 @@ btnproject.addEventListener('click', (e) => {
 
     const formDataObj = {};
     formData.forEach((value, key) => {
-        console.log((value, key))
         formDataObj[key] = value
     });
-    // console.log(formDataObj)
     const newSelection = document.createElement('option');
     newSelection.value = formDataObj.projecttitle;
     newSelection.textContent = formDataObj.projecttitle;
@@ -234,6 +179,4 @@ btnproject.addEventListener('click', (e) => {
 const projects = document.querySelector('#options');
 projects.addEventListener('change',(e) => {
     projectManager.loadProject(e)
-    console.log('in eventlistener');
-    console.log(projectManager.activeProject)
 })

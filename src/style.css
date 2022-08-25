@@ -124,7 +124,7 @@ button {
 }
 
 .createtask {
-    display: none;
+    display: flex;
     width: 500px;
     height: 400px;
 }
