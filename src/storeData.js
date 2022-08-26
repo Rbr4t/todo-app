@@ -15,4 +15,9 @@ function loadData(){
     return JSON.parse(retrievedObject);
 }
 
-export {storeData, loadData}
+function loadActiveProject(){
+    const retrievedObject = localStorage.getItem('activeProject');
+
+    return retrievedObject;
+}
+export {storeData, loadData, loadActiveProject}

@@ -3,12 +3,20 @@ import loadHome from './homepage.js'
 import populate from './populateTask.js'
 import loadPopups from './loadPopups.js'
 import {validateTask, validateProject, alreadyTaken} from './formvalidation.js'
-import {storeData, loadData} from './storeData.js'
+import {storeData, loadData, loadActiveProject} from './storeData.js'
+
+// checking if document is loaded in.
+let stateCheck = setInterval(() => {
+    if (document.readyState === 'complete') {
+      clearInterval(stateCheck);
+      projectManager.load(loadData())
+      projectManager.loadProjects();
+    }
+  }, 100);
 
 // loads homepage and popups
 loadPopups();
 loadHome();
-
 
 function Board(title){
     this.title = title;
@@ -67,19 +75,34 @@ const projectManager = (function(){
     
     const load = (data) => {
         const keys = Object.keys(data);
-        console.log(keys)
-        if(keys.length>0){
-            projects = [];
-        }
+        // console.log(keys)
+        projects = []
+
         for(let j=0; j<keys.length; j++) {
-            console.log(j)
+            // console.log(j)
             const obj = new Board(keys[j]);
-            console.log(data[obj.title])
+            // console.log(data[obj.title])
             for(let objectData of data[obj.title]){
                 obj.addToBoard(objectData.title, objectData.description, objectData.dueDate, objectData.priority)
             }
             projects.push(obj)
         };
+        activeProject = loadActiveProject();
+        // console.log(projects);
+    }
+    const loadToTheSelection = (DataObj, selected) => {
+        console.log(projects)
+        const list = document.querySelector('#options');
+        document.querySelector('#options').innerHTML = ``;
+        // console.log(DataObj)
+        projects.forEach(p => {
+            console.log("HERE")
+            const newSelection = document.createElement('option');
+            newSelection.value = p.title;
+            newSelection.textContent = p.title;
+            list.appendChild(newSelection);
+        })
+        list.value = selected;
     }
 
     const save = () => {
@@ -88,9 +111,8 @@ const projectManager = (function(){
     const isIn = (X) => {
         return projects.filter(obj => obj.title === X).length < 1? false: true;
     }
-
     const resetAll = () => {
-        projects = [new Board('Home')];
+        projects = [];
         activeProject = projects[0];
     }
     const createProject = (title) => {
@@ -99,6 +121,7 @@ const projectManager = (function(){
         confirm('new project added')
     }
 
+    // Loading individual project
     const loadProject = (e) => {
         activeProject.removeAll()
         for(let i= 0; i< projects.length; i++){
@@ -106,12 +129,20 @@ const projectManager = (function(){
                 activeProject = projects[i];
             }
         }
-        activeProject.board.forEach(obj => projectManager.activeProject.showOnBoard(obj))  
+        
+        activeProject.board.forEach(obj => projectManager.activeProject.showOnBoard(obj));  
     }
 
+    // For loading the projects to the selection bar
     const loadProjects = () => {
-        console.log(activeProject)
-        activeProject.board.forEach(obj => console.log(obj))  
+        for(let i= 0; i< projects.length; i++){
+            if(activeProject=== projects[i].title){
+                activeProject = projects[i];
+                // console.log(activeProject.title)
+            }
+        }
+        loadToTheSelection(projects, activeProject.title);
+        activeProject.board.forEach(obj => activeProject.showOnBoard(obj))
 
     }
     return {
@@ -122,15 +153,10 @@ const projectManager = (function(){
         resetAll,
         save,
         load,
-        loadProjects
+        loadProjects,
+        loadToTheSelection
     }
 })();
-const btnDark = document.querySelector('.buttonDarkmode');
-btnDark.addEventListener('click', () => {
-    console.log(loadData())
-    projectManager.load(loadData())
-    projectManager.loadProjects();
-});
 
 
 // Adds eventlisteners to checkboxes
@@ -189,12 +215,13 @@ btn.addEventListener('click', function(e){
     } else {
         validateTask()
     }
-    
+    projectManager.save();
 }); 
 
 // clear all
 const clearAll = document.querySelector('.clear');
 clearAll.addEventListener('click', () => {
+    localStorage.clear();
     projectManager.activeProject.removeAll();
     projectManager.activeProject.board = [];
     projectManager.resetAll();    
@@ -236,7 +263,7 @@ btnproject.addEventListener('click', (e) => {
             validateProject()
         }
     }
-    
+    projectManager.save();
     
 })
 
@@ -244,5 +271,5 @@ btnproject.addEventListener('click', (e) => {
 const projects = document.querySelector('#options');
 projects.addEventListener('change',(e) => {
     projectManager.loadProject(e);
-    projectManager.save();
+    
 })
