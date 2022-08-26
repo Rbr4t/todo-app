@@ -2,7 +2,7 @@ import './style.css';
 import loadHome from './homepage.js'
 import populate from './populateTask.js'
 import loadPopups from './loadPopups.js'
-import {validateTask, validateProject} from './formvalidation.js'
+import {validateTask, validateProject, alreadyTaken} from './formvalidation.js'
 
 
 // loads homepage and popups
@@ -31,7 +31,7 @@ function Board(title){
             };   
         }
         // Removes it's parent element, the card 
-        e.target.parentElement.remove();
+        e.target.parentElement.parentElement.remove();
     };
 
     this.removeAll = function() {
@@ -64,6 +64,10 @@ const projectManager = (function(){
     let projects = [new Board('Home')];
     let activeProject = projects[0];
 
+    const isIn = (X) => {
+        return projects.filter(obj => obj.title === X).length < 1? false: true;
+    }
+
     const resetAll = () => {
         projects = [new Board('Home')];
         activeProject = projects[0];
@@ -85,6 +89,7 @@ const projectManager = (function(){
     }
     return {createProject, 
         get activeProject(){return activeProject}, 
+        isIn,
         loadProject,
         resetAll}
 })();
@@ -176,18 +181,23 @@ btnproject.addEventListener('click', (e) => {
         formDataObj[key] = value
     });
 
-    if (formDataObj.title !== ''){
-        const newSelection = document.createElement('option');
-        newSelection.value = formDataObj.projecttitle;
-        newSelection.textContent = formDataObj.projecttitle;
-        list.appendChild(newSelection);
-        e.target.parentElement.reset();
-        document.getElementById('newproject').style.display = 'none';
-        
-        projectManager.createProject(formDataObj.projecttitle);
-    } else{
-        validateProject()
+    if (projectManager.isIn(formDataObj.projecttitle)){
+        alreadyTaken()
+    } else {
+        if (formDataObj.projecttitle !== ''){
+            const newSelection = document.createElement('option');
+            newSelection.value = formDataObj.projecttitle;
+            newSelection.textContent = formDataObj.projecttitle;
+            list.appendChild(newSelection);
+            e.target.parentElement.reset();
+            document.getElementById('newproject').style.display = 'none';
+            
+            projectManager.createProject(formDataObj.projecttitle);
+        } else{
+            validateProject()
+        }
     }
+    
     
 })
 

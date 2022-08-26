@@ -166,3 +166,12 @@ form .data> .right{
     top: 0;
     right: 0; 
 }
+
+.remove>img {
+    height: 25px;
+}
+
+.remove {
+    background-color: transparent;
+    border: 0;
+}

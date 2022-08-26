@@ -17,4 +17,11 @@ function validateProject(){
     title.reportValidity();
 }
 
-export {validateTask, validateProject}
+function alreadyTaken(){
+    const title = document.getElementById("titleproject");
+    
+    title.setCustomValidity("Project with the same name already exists");
+    title.reportValidity();
+}
+
+export {validateTask, validateProject, alreadyTaken}
