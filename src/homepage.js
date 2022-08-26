@@ -51,7 +51,7 @@ export default function loadHome(){
 
     // dark mode switch
     const button = document.createElement('button');
-    button.classList.add('button')
+    button.classList.add('buttonDarkmode')
     const moon = new Image();
     moon.src = Moon;
     moon.alt = 'darkmode';

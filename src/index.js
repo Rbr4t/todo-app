@@ -3,7 +3,7 @@ import loadHome from './homepage.js'
 import populate from './populateTask.js'
 import loadPopups from './loadPopups.js'
 import {validateTask, validateProject, alreadyTaken} from './formvalidation.js'
-
+import {storeData, loadData} from './storeData.js'
 
 // loads homepage and popups
 loadPopups();
@@ -15,6 +15,7 @@ function Board(title){
     this.board = [];
     
     this.addToBoard = function(title, description, dueDate=null, priority) {
+        // console.log([title, description, dueDate, priority])
         const newCard = new Card(title, description, dueDate, priority)
         this.board.push(newCard)
     }
@@ -63,7 +64,27 @@ const projectManager = (function(){
     
     let projects = [new Board('Home')];
     let activeProject = projects[0];
+    
+    const load = (data) => {
+        const keys = Object.keys(data);
+        console.log(keys)
+        if(keys.length>0){
+            projects = [];
+        }
+        for(let j=0; j<keys.length; j++) {
+            console.log(j)
+            const obj = new Board(keys[j]);
+            console.log(data[obj.title])
+            for(let objectData of data[obj.title]){
+                obj.addToBoard(objectData.title, objectData.description, objectData.dueDate, objectData.priority)
+            }
+            projects.push(obj)
+        };
+    }
 
+    const save = () => {
+        storeData(activeProject, projects)
+    }
     const isIn = (X) => {
         return projects.filter(obj => obj.title === X).length < 1? false: true;
     }
@@ -87,12 +108,30 @@ const projectManager = (function(){
         }
         activeProject.board.forEach(obj => projectManager.activeProject.showOnBoard(obj))  
     }
-    return {createProject, 
+
+    const loadProjects = () => {
+        console.log(activeProject)
+        activeProject.board.forEach(obj => console.log(obj))  
+
+    }
+    return {
+        createProject, 
         get activeProject(){return activeProject}, 
         isIn,
         loadProject,
-        resetAll}
+        resetAll,
+        save,
+        load,
+        loadProjects
+    }
 })();
+const btnDark = document.querySelector('.buttonDarkmode');
+btnDark.addEventListener('click', () => {
+    console.log(loadData())
+    projectManager.load(loadData())
+    projectManager.loadProjects();
+});
+
 
 // Adds eventlisteners to checkboxes
 function addDone(){
@@ -204,5 +243,6 @@ btnproject.addEventListener('click', (e) => {
 // choosing a project
 const projects = document.querySelector('#options');
 projects.addEventListener('change',(e) => {
-    projectManager.loadProject(e)
+    projectManager.loadProject(e);
+    projectManager.save();
 })
