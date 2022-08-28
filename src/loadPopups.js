@@ -9,7 +9,7 @@ export default function loadPopups(){
             <label for="title1" class="right">Enter title</label>
             <input type="text" name="title" id="title1" required minlength="1" maxlength="15">
             <label for="description" class="right" >Enter text</label>
-            <input type="text" name="description" id="description" maxlength="249">
+            <input type="text" name="description" id="description" maxlength="180">
             <label for="dueDate" class="right">Due</label>
             <input type="date" name="dueDate" id="dueDate">
             <label for="priority" class="right">Priority</label>

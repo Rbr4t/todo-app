@@ -12,13 +12,11 @@ function storeData(activeProject, allProjects){
 
 function loadData(){
     const retrievedObject = localStorage.getItem('projects');
-
     return JSON.parse(retrievedObject);
 }
 
 function loadActiveProject(){
     const retrievedObject = localStorage.getItem('activeProject');
-    console.log(retrievedObject)
     return retrievedObject;
 }
 export {storeData, loadData, loadActiveProject}

@@ -35,15 +35,12 @@ function Board(title){
     }
         
     this.removeFromBoard = function (e){
-        console.log(e.target.parentElement)
         for(let t=0; t<document.querySelectorAll('.remove').length; t++){
-            if(e.target.parentElement === document.querySelectorAll('.remove')[t].parentElement){
-                console.log("HEY!");
+            if(e.target.parentElement.parentElement === document.querySelectorAll('.remove')[t].parentElement){
                 projectManager.activeProject.board.splice(t, 1);
             };   
         }
         // Removes it's parent element, the card 
-        console.log(e.target)
         projectManager.save()
         e.target.parentElement.parentElement.remove();
     };
@@ -105,7 +102,6 @@ const projectManager = (function(){
         
     }
     const loadToTheSelection = (selected) => {
-
         const list = document.querySelector('#options');
         document.querySelector('#options').innerHTML = ``;
 
@@ -115,7 +111,6 @@ const projectManager = (function(){
             newSelection.textContent = p.title;
             list.appendChild(newSelection);
         })
-        console.log(selected)
         list.value = selected;
     }
 
@@ -125,9 +120,38 @@ const projectManager = (function(){
     const isIn = (X) => {
         return projects.filter(obj => obj.title === X).length < 1? false: true;
     }
-    const resetAll = () => {
-        projects = [new Board('Home')];
+    const removeProject = () => {
+        
+        function index(){
+            for(let i= 0; i< projects.length; i++){
+                if(activeProject===projects[i]){
+                    return i
+                }
+            }
+        }
+
+        let i = index();
+
+        if(projects.length===1){
+            projects = [new Board('Home')];
+            
+        } else if(activeProject.title!=='Home'){
+            length = projects.length;
+            let newProjects = [];
+            for(let j=0; j<length; j++){
+                if(j!==i){
+                    newProjects.push(projects[j]);
+                }
+            }
+            projects = newProjects;
+        } else {
+            projects[0].board = [];
+        }
         activeProject = projects[0];
+        save();
+        loadToTheSelection('Home');
+        activeProject.board.forEach(obj => projectManager.activeProject.showOnBoard(obj));
+        
     }
     const createProject = (title) => {
         const project = new Board(title);
@@ -167,7 +191,7 @@ const projectManager = (function(){
         get activeProjects(){return projects},
         isIn,
         loadProject,
-        resetAll,
+        removeProject,
         save,
         load,
         loadProjects,
@@ -238,13 +262,13 @@ btn.addEventListener('click', function(e){
     projectManager.save();
 }); 
 
-// clear -a̶l̶l̶ PROJECT
+// clear/delete a PROJECT
 const clearAll = document.querySelector('.clear');
 clearAll.addEventListener('click', () => {
-    localStorage.clear();
+    
     projectManager.activeProject.removeAll();
-    projectManager.resetAll();    
-    document.querySelector('#options').innerHTML = `<option value="Home">Home</option>`
+    projectManager.removeProject();    
+    
 })
 
 // add a new project
