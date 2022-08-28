@@ -1,7 +1,7 @@
 import {format} from 'date-fns';
 import Bin from './images/bin.png'
 
-export default function populate(title, description, dueDate, priority){
+export default function populate(title, description, dueDate, priority, state){
     const todo = document.querySelector('.todo');
     // card
     const div = document.createElement('div');
@@ -43,6 +43,10 @@ export default function populate(title, description, dueDate, priority){
     div.appendChild(h4)
     div.appendChild(button)
     div.appendChild(input)
+
+    if(state){
+        div.classList.add('done');
+    }
 
     todo.appendChild(div)
 }

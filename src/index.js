@@ -7,9 +7,9 @@ import {storeData, loadData, loadActiveProject} from './storeData.js'
 
 // checking if document is loaded in.
 let stateCheck = setInterval(() => {
-    if (document.readyState === 'complete') {
+    if (document.readyState === 'complete'){
       clearInterval(stateCheck);
-      projectManager.load(loadData())
+      projectManager.load(loadData());
       projectManager.loadProjects();
     }
   }, 100);
@@ -19,18 +19,19 @@ loadPopups();
 loadHome();
 
 function Board(title){
+
     this.title = title;
     this.board = [];
     
-    this.addToBoard = function(title, description, dueDate=null, priority) {
-        // console.log([title, description, dueDate, priority])
-        const newCard = new Card(title, description, dueDate, priority)
-        this.board.push(newCard)
+    this.addToBoard = function(title, description, dueDate=null, priority, state) {
+        const newCard = new Card(title, description, dueDate, priority);
+        newCard.state = state;
+        this.board.push(newCard);
     }
     this.showOnBoard = function(obj){
-        populate(obj.title, obj.description, obj.dueDate, obj.priority)
-        addRemove()
-        addDone()
+        populate(obj.title, obj.description, obj.dueDate, obj.priority, obj.state);
+        addRemove();
+        addDone();
     }
         
     this.removeFromBoard = function (e){
@@ -48,13 +49,21 @@ function Board(title){
             if(document.querySelector('.todo').lastChild.id === 'addtask'){
                 break;
             } else {
-                document.querySelector('.todo').lastChild.remove()
+                document.querySelector('.todo').lastChild.remove();
             }
         }
     };
 
     this.taskDone = function (e)  {
+        const toggle = (state) => state?false:true;
+        
         e.target.parentElement.classList.toggle('done');
+
+        for(let i=0; i<document.querySelectorAll('div.task').length; i++){
+            if(e.target.parentElement === document.querySelectorAll('div.task')[i]){
+                this.board[i].state = toggle(this.board[i].state);
+            }
+        }
     }
 
 }
@@ -65,6 +74,7 @@ function Card(title, description, dueDate, priority){
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
+    this.state = false;
 }
 
 
@@ -74,56 +84,58 @@ const projectManager = (function(){
     let activeProject = projects[0];
     
     const load = (data) => {
-        const keys = Object.keys(data);
-        // console.log(keys)
-        projects = []
+        if(localStorage.length > 0){
 
-        for(let j=0; j<keys.length; j++) {
-            // console.log(j)
-            const obj = new Board(keys[j]);
-            // console.log(data[obj.title])
-            for(let objectData of data[obj.title]){
-                obj.addToBoard(objectData.title, objectData.description, objectData.dueDate, objectData.priority)
-            }
-            projects.push(obj)
-        };
-        activeProject = loadActiveProject();
-        // console.log(projects);
+            const keys = Object.keys(data);
+            projects = [];
+    
+            for(let j=0; j<keys.length; j++) {
+                const obj = new Board(keys[j]);
+                for(let objectData of data[obj.title]){
+                    obj.addToBoard(objectData.title, objectData.description, objectData.dueDate, objectData.priority, objectData.state)
+                }
+                projects.push(obj);
+            };
+            activeProject = loadActiveProject();
+        }
+        
     }
     const loadToTheSelection = (DataObj, selected) => {
-        console.log(projects)
+
         const list = document.querySelector('#options');
         document.querySelector('#options').innerHTML = ``;
-        // console.log(DataObj)
+
         projects.forEach(p => {
-            console.log("HERE")
             const newSelection = document.createElement('option');
             newSelection.value = p.title;
             newSelection.textContent = p.title;
             list.appendChild(newSelection);
         })
+
         list.value = selected;
     }
 
     const save = () => {
-        storeData(activeProject, projects)
+        storeData(activeProject, projects);
     }
     const isIn = (X) => {
         return projects.filter(obj => obj.title === X).length < 1? false: true;
     }
     const resetAll = () => {
-        projects = [];
+        projects = [new Board('Home')];
         activeProject = projects[0];
     }
     const createProject = (title) => {
         const project = new Board(title);
         projects.push(project);
-        confirm('new project added')
+        confirm('new project added');
     }
 
     // Loading individual project
     const loadProject = (e) => {
+
         activeProject.removeAll()
+
         for(let i= 0; i< projects.length; i++){
             if(e.target.value === projects[i].title){
                 activeProject = projects[i];
@@ -138,16 +150,17 @@ const projectManager = (function(){
         for(let i= 0; i< projects.length; i++){
             if(activeProject=== projects[i].title){
                 activeProject = projects[i];
-                // console.log(activeProject.title)
             }
         }
+
         loadToTheSelection(projects, activeProject.title);
-        activeProject.board.forEach(obj => activeProject.showOnBoard(obj))
+        activeProject.board.forEach(obj => activeProject.showOnBoard(obj));
 
     }
     return {
         createProject, 
         get activeProject(){return activeProject}, 
+        get activeProjects(){return projects},
         isIn,
         loadProject,
         resetAll,
@@ -162,7 +175,10 @@ const projectManager = (function(){
 // Adds eventlisteners to checkboxes
 function addDone(){
     const task = document.querySelectorAll('.done')[document.querySelectorAll('.done').length-1];
-    task.addEventListener('click', Object(projectManager.activeProject).taskDone);
+    task.addEventListener('click', (e) => {
+        projectManager.activeProject.taskDone(e);
+        projectManager.save();
+    });
     
 }
 
@@ -199,16 +215,16 @@ const btn =document.querySelector('.post');
 btn.addEventListener('click', function(e){
     
     e.preventDefault()
-    
     const formData = new FormData(document.querySelector('#task'))
-
     const formDataObj = {};
+
     formData.forEach((value, key) => {
         formDataObj[key] = value
     });
 
+    formDataObj['state'] = false;
     if(formDataObj.title !== ''){
-        projectManager.activeProject.addToBoard(formDataObj.title, formDataObj.description, formDataObj.dueDate, formDataObj.priority);
+        projectManager.activeProject.addToBoard(formDataObj.title, formDataObj.description, formDataObj.dueDate, formDataObj.priority, formDataObj.state);
         projectManager.activeProject.showOnBoard(formDataObj);
         document.querySelector('.popup').style.display = 'none';
         e.target.parentElement.reset();
@@ -223,7 +239,6 @@ const clearAll = document.querySelector('.clear');
 clearAll.addEventListener('click', () => {
     localStorage.clear();
     projectManager.activeProject.removeAll();
-    projectManager.activeProject.board = [];
     projectManager.resetAll();    
     document.querySelector('#options').innerHTML = `<option value="Home">Home</option>`
 })
@@ -237,12 +252,12 @@ project.addEventListener('click', e => {
 // send a new project
 const btnproject = document.querySelector('.add');
 btnproject.addEventListener('click', (e) => {
+    
     e.preventDefault();
     const list = document.querySelector('#options');
-    
     const formData = new FormData(document.querySelector('#project'))
-
     const formDataObj = {};
+
     formData.forEach((value, key) => {
         formDataObj[key] = value
     });
