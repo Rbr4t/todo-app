@@ -35,12 +35,16 @@ function Board(title){
     }
         
     this.removeFromBoard = function (e){
+        console.log(e.target.parentElement)
         for(let t=0; t<document.querySelectorAll('.remove').length; t++){
             if(e.target.parentElement === document.querySelectorAll('.remove')[t].parentElement){
-                projectManager.activeProject.board.splice(t, 1)
+                console.log("HEY!");
+                projectManager.activeProject.board.splice(t, 1);
             };   
         }
         // Removes it's parent element, the card 
+        console.log(e.target)
+        projectManager.save()
         e.target.parentElement.parentElement.remove();
     };
 
@@ -100,7 +104,7 @@ const projectManager = (function(){
         }
         
     }
-    const loadToTheSelection = (DataObj, selected) => {
+    const loadToTheSelection = (selected) => {
 
         const list = document.querySelector('#options');
         document.querySelector('#options').innerHTML = ``;
@@ -111,7 +115,7 @@ const projectManager = (function(){
             newSelection.textContent = p.title;
             list.appendChild(newSelection);
         })
-
+        console.log(selected)
         list.value = selected;
     }
 
@@ -128,7 +132,7 @@ const projectManager = (function(){
     const createProject = (title) => {
         const project = new Board(title);
         projects.push(project);
-        confirm('new project added');
+        alert('new project added');
     }
 
     // Loading individual project
@@ -153,7 +157,7 @@ const projectManager = (function(){
             }
         }
 
-        loadToTheSelection(projects, activeProject.title);
+        loadToTheSelection(activeProject.title);
         activeProject.board.forEach(obj => activeProject.showOnBoard(obj));
 
     }
@@ -185,7 +189,7 @@ function addDone(){
 // Adds for every remove button a event listener
 function addRemove(){
     
-    const tasks = document.querySelectorAll('.remove');
+    const tasks = document.querySelectorAll('.remove img');
 
     tasks.forEach((task) => {
         task.removeEventListener('click', Object(projectManager.activeProject).removeFromBoard);
@@ -234,7 +238,7 @@ btn.addEventListener('click', function(e){
     projectManager.save();
 }); 
 
-// clear all
+// clear -a̶l̶l̶ PROJECT
 const clearAll = document.querySelector('.clear');
 clearAll.addEventListener('click', () => {
     localStorage.clear();
@@ -286,5 +290,5 @@ btnproject.addEventListener('click', (e) => {
 const projects = document.querySelector('#options');
 projects.addEventListener('change',(e) => {
     projectManager.loadProject(e);
-    
+    projectManager.save()
 })

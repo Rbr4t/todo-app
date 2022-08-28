@@ -1,5 +1,5 @@
 function storeData(activeProject, allProjects){
-
+    
     localStorage.setItem('activeProject', activeProject.title);
     let projects = {};
 
@@ -18,7 +18,7 @@ function loadData(){
 
 function loadActiveProject(){
     const retrievedObject = localStorage.getItem('activeProject');
-
+    console.log(retrievedObject)
     return retrievedObject;
 }
 export {storeData, loadData, loadActiveProject}

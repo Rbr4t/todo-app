@@ -36,6 +36,9 @@ export default function populate(title, description, dueDate, priority, state){
     button.appendChild(img)
     const input = document.createElement('input');
     input.type = 'checkbox';
+    if(state){
+        input.checked = true;
+    }
     input.classList.add('done');
 
     div.appendChild(h1)
