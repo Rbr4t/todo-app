@@ -11,6 +11,12 @@ let stateCheck = setInterval(() => {
       clearInterval(stateCheck);
       projectManager.load(loadData());
       projectManager.loadProjects();
+      
+      try {
+        hover();
+      } catch(err){
+
+      }
     }
   }, 100);
 
@@ -32,6 +38,7 @@ function Board(title){
         populate(obj.title, obj.description, obj.dueDate, obj.priority, obj.state);
         addRemove();
         addDone();
+        hover();
     }
         
     this.removeFromBoard = function (e){
@@ -314,5 +321,21 @@ btnproject.addEventListener('click', (e) => {
 const projects = document.querySelector('#options');
 projects.addEventListener('change',(e) => {
     projectManager.loadProject(e);
-    projectManager.save()
+    projectManager.save();
 })
+
+
+// Reveal remove and checked buttons when cursor is hovering the task
+function hover(){
+    const hover = document.querySelectorAll('div.task')[document.querySelectorAll('div.task').length -1];
+  
+
+    hover.addEventListener('mouseover', e => {
+      hover.childNodes[4].style.display = 'block';
+      hover.childNodes[3].firstChild.style.display = 'block';
+  })
+    hover.addEventListener('mouseout', e => {
+      hover.childNodes[4].style.display = 'none';
+      hover.childNodes[3].firstChild.style.display = 'none';
+  })
+  }
